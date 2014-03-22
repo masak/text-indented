@@ -5,6 +5,7 @@ class Suite {
 }
 
 class TooMuchIndent is Exception {}
+class PartialIndent is Exception {}
 
 constant TABSTOP = 4;
 
@@ -29,10 +30,13 @@ regex line {
 
     {
         my $new_indent = $0.chars div TABSTOP;
+        my $partial_indent = ~$1;
         my $line = ~$2;
 
         die TooMuchIndent.new
             if $new_indent > indent() + 1;
+        die PartialIndent.new
+            if $partial_indent;
 
         if $new_indent > indent() {
             my $new_suite = Suite.new;

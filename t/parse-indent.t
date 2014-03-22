@@ -94,4 +94,13 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
     is $root.items[1].items[1].items.elems, 2, 'two lines on indent level 3';
 }
 
+{
+    my $input = q:to/EOF/;
+    Level 1
+          Level 2 and a half!
+    EOF
+
+    fails_with($input, Text::Indented::PartialIndent);
+}
+
 done;
