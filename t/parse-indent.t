@@ -32,4 +32,13 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
     }
 }
 
+{
+    my $input = q:to/EOF/;
+    Level 1
+        Level 2
+    EOF
+
+    parses_correctly($input, 'single indent');
+}
+
 done;
