@@ -59,9 +59,9 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
     my $root = parse($input);
 
     isa_ok $root, Text::Indented::Suite;
-    is $root.items.elems, 2, 'two things were parsed:';
-    isa_ok $root.items[0], Str, 'a string';
-    isa_ok $root.items[1], Text::Indented::Suite, 'and a suite';
+    is +$root, 2, 'two things were parsed:';
+    isa_ok $root[0], Str, 'a string';
+    isa_ok $root[1], Text::Indented::Suite, 'and a suite';
 }
 
 {
@@ -73,10 +73,10 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
 
     my $root = parse($input);
 
-    is $root.items.elems, 3, 'three things were parsed:';
-    isa_ok $root.items[0], Str, 'a string';
-    isa_ok $root.items[1], Text::Indented::Suite, 'a suite';
-    isa_ok $root.items[2], Str, 'and a string';
+    is +$root, 3, 'three things were parsed:';
+    isa_ok $root[0], Str, 'a string';
+    isa_ok $root[1], Text::Indented::Suite, 'a suite';
+    isa_ok $root[2], Str, 'and a string';
 }
 
 {
@@ -90,8 +90,8 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
 
     my $root = parse($input);
 
-    is $root.items.elems, 3, 'three things on the top level';
-    is $root.items[1].items[1].items.elems, 2, 'two lines on indent level 3';
+    is +$root, 3, 'three things on the top level';
+    is +$root[1][1], 2, 'two lines on indent level 3';
 }
 
 {

@@ -1,7 +1,7 @@
 grammar Text::Indented;
 
 class Suite {
-    has @.items;
+    has @.items handles <push at_pos Numeric Bool>;
 }
 
 class TooMuchIndent is Exception {}
@@ -21,7 +21,7 @@ regex TOP {
 sub indent { @*SUITES.end }
 sub root_suite { @*SUITES[0] }
 sub current_suite { @*SUITES[indent] }
-sub add_to_current_suite($item) { current_suite.items.push($item) }
+sub add_to_current_suite($item) { current_suite.push($item) }
 
 sub increase_indent($new_suite) { @*SUITES.push($new_suite) }
 sub decrease_indent { pop @*SUITES }
@@ -39,7 +39,7 @@ regex line {
         die PartialIndent.new
             if $partial_indent;
         die InitialIndent.new
-            if !root_suite.items && $new_indent > 0;
+            if !root_suite() && $new_indent > 0;
 
         if $new_indent > indent() {
             my $new_suite = Suite.new;
