@@ -64,4 +64,19 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
     isa_ok $root.items[1], Text::Indented::Suite, 'and a suite';
 }
 
+{
+    my $input = q:to/EOF/;
+    Level 1
+        Level 2
+    Level 1 again
+    EOF
+
+    my $root = parse($input);
+
+    is $root.items.elems, 3, 'three things were parsed:';
+    isa_ok $root.items[0], Str, 'a string';
+    isa_ok $root.items[1], Text::Indented::Suite, 'a suite';
+    isa_ok $root.items[2], Str, 'and a string';
+}
+
 done;
