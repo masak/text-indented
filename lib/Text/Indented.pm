@@ -40,7 +40,7 @@ regex line {
             increase_indent($new_suite);
         }
         elsif $new_indent < indent() {
-            decrease_indent;
+            decrease_indent until indent() == $new_indent;
         }
 
         add_to_current_suite($line);

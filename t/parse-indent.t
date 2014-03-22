@@ -79,4 +79,19 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
     isa_ok $root.items[2], Str, 'and a string';
 }
 
+{
+    my $input = q:to/EOF/;
+    Level 1
+        Level 2
+            Level 3
+            Level 3
+    Level 1 again
+    EOF
+
+    my $root = parse($input);
+
+    is $root.items.elems, 3, 'three things on the top level';
+    is $root.items[1].items[1].items.elems, 2, 'two lines on indent level 3';
+}
+
 done;
