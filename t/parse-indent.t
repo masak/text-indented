@@ -103,4 +103,12 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
     fails_with($input, Text::Indented::PartialIndent);
 }
 
+{
+    my $input = q:to/EOF/;
+        Level 2 already on the first line!
+    EOF
+
+    fails_with($input, Text::Indented::InitialIndent);
+}
+
 done;

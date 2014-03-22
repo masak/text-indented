@@ -6,6 +6,7 @@ class Suite {
 
 class TooMuchIndent is Exception {}
 class PartialIndent is Exception {}
+class InitialIndent is Exception {}
 
 constant TABSTOP = 4;
 
@@ -37,6 +38,8 @@ regex line {
             if $new_indent > indent() + 1;
         die PartialIndent.new
             if $partial_indent;
+        die InitialIndent.new
+            if !root_suite.items && $new_indent > 0;
 
         if $new_indent > indent() {
             my $new_suite = Suite.new;
