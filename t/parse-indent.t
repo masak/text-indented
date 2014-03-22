@@ -50,4 +50,18 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
     fails_with($input, Text::Indented::TooMuchIndent);
 }
 
+{
+    my $input = q:to/EOF/;
+    Level 1
+        Level 2
+    EOF
+
+    my $root = parse($input);
+
+    isa_ok $root, Text::Indented::Suite;
+    is $root.items.elems, 2, 'two things were parsed:';
+    isa_ok $root.items[0], Str, 'a string';
+    isa_ok $root.items[1], Text::Indented::Suite, 'and a suite';
+}
+
 done;
