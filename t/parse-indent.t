@@ -41,4 +41,13 @@ sub fails_with($input, $ex_type, $message = $ex_type.^name) {
     parses_correctly($input, 'single indent');
 }
 
+{
+    my $input = q:to/EOF/;
+    Level 1
+            Level 3!
+    EOF
+
+    fails_with($input, Text::Indented::TooMuchIndent);
+}
+
 done;
