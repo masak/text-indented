@@ -18,7 +18,11 @@ sub parses_correctly($input, $message) {
     }
 }
 
-sub fails_with($input, $ex_type, $message = $ex_type.^name) {
+sub fails_with($input, $ex_type, $message = explain $ex_type.^name) {
+    sub explain($string) {
+        $string.comb(/<:Lu><:Ll>+/)>>.lc.join(' ') ~ " exception thrown";
+    }
+
     try {
         parse($input);
         ok 0, $message;
