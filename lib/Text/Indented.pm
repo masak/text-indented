@@ -1,7 +1,9 @@
 grammar Text::Indented;
 
 class Suite {
-    has @.items handles <push at_pos Numeric Bool>;
+    my subset Item where Str | Suite;
+
+    has Item @.items handles <push at_pos Numeric Bool>;
 }
 
 class TooMuchIndent is Exception {}
