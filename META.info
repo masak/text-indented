@@ -2,6 +2,9 @@
     "name"        : "Text::Indented",
     "version"     : "0.1",
     "description" : "Parse indented text in Perl 6",
+    "provides"    : {
+        "Text::Indented" : "lib/Text/Indented.pm"
+    },
     "depends"     : [],
     "source-url"  : "https://github.com/masak/text-indented.git"
 }
